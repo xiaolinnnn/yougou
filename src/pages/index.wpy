@@ -1,0 +1,180 @@
+<style lang="less">
+// 搜索栏
+.searth-bar {
+  padding: 20rpx 16rpx;
+  box-sizing: border-box;
+  background-color: #ff2d4a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  icon {
+    position: absolute;
+    left: 50%;
+    z-index: 998;
+    transform: translateX(-200%);
+  }
+  input {
+    background-color: #fff;
+    width: 100%;
+    height: 60rpx;
+    text-align: center;
+    border-radius: 10rpx;
+    font-size: 24rpx;
+  }
+}
+// 轮播图
+swiper {
+  height: 340rpx;
+  navigator {
+    height: 100%;
+    image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+// 导航栏
+.nav {
+  display: flex;
+  padding: 24rpx 0 29rpx;
+  navigator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    image {
+      width: 128rpx;
+      height: 128rpx;
+    }
+  }
+}
+// 楼层部分
+.floor{
+  .item {
+    padding-top: 30rpx;
+    .title {
+      height: 60rpx;
+      width: 100%;
+      display: block;
+    }
+    .banner {
+      padding: 20rpx 11rpx 0 16rpx;
+  
+      height: 386rpx;
+      navigator {
+        box-sizing: border-box;
+        border: 5rpx solid white;
+        // display: block;
+        image {
+          height: 100%;
+        }
+      }
+      navigator:first-child {
+        height: 100%;
+      }
+      navigator:not(:first-child) {
+        height: 50%;
+      }
+    }
+  }
+}
+
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix {
+  overflow: hidden;
+}
+</style>
+<template>
+ <view class="searth-bar">
+   <icon type="search" size="16">
+   </icon>
+   <input value="" type="text" placeholder="搜索"/>
+ </view>
+ <!-- 轮播图 -->
+ <swiper indicator-dots autoplay circular>
+     <block wx:for="{{swiperData}}" wx:key="">
+         <swiper-item>
+           <navigator url="{{item.navigator_url}}" open-type="navigate" hover-class="none">
+             <image mode="aspectFill" src="{{item.image_src}}"></image>
+           </navigator>
+         </swiper-item>
+     </block>
+ </swiper>
+ <!-- 导航栏 -->
+ <view class="nav">
+   <block wx:for="{{navData}}" wx:key="">
+    <navigator url="{{item.navigator_url}}" open-type="navigate" hover-class="none">
+       <image src="{{item.image_src}}" ></image>
+    </navigator>
+    </block>
+ </view>
+ <!-- 楼层部分 -->
+  <view class="floor">
+   <block wx:for="{{floorData}}" wx:key="">
+     <view class="item">
+       <image class="title" src="{{item.floor_title.image_src}}">
+       </image>
+     <view class="banner">
+        <block wx:for="{{item.product_list}}"  wx:for-index="i" wx:for-item="product">
+          <navigator class="fl" url="{{product.navigator_url}}">
+            <image style="width:{{product.image_width}}rpx;" src="{{product.image_src}}"></image>
+          </navigator>
+        </block>
+      </view>
+     </view>
+   </block>
+ </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '优购'
+  }
+  data = {
+    swiperData: '',
+    navData: '',
+    floorData: ''
+  }
+  onLoad() {
+    // 轮播图接口
+    wx.request({
+      url: 'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
+      method: 'GET',
+      success: backData => {
+        //console.log(backData)
+        this.swiperData = backData.data.message
+        this.$apply()
+      }
+    })
+    //导航栏接口
+    wx.request({
+      url: 'https://www.zhengzhicheng.cn/api/public/v1/home/catitems',
+      method: 'GET',
+      success: backData => {
+        this.navData = backData.data.message
+        this.$apply()
+      }
+    })
+    // 楼层部分
+    wx.request({
+      url: 'https://www.zhengzhicheng.cn/api/public/v1/home/floordata',
+      method: 'GET',
+      success: backData => {
+        console.log(backData)
+        this.floorData = backData.data.message
+        this.$apply()
+      }
+    })
+  }
+}
+</script>
+
