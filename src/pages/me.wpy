@@ -1,0 +1,196 @@
+<!--  -->
+<template>
+  <view class="top">
+    <view class="user-info">
+        <text class="iconfont icon-xiaoxi"></text>
+        <image src="./image/icon/icon.png"></image>
+        <text class="iconfont icon-shezhi"></text>
+        <text>轻松登录/注册</text>
+    </view>
+  </view>
+  <view class="bottom">
+    <view class="collects">
+      <view class="collect">
+        <text>0</text>
+        <text>收藏的店铺</text>
+      </view>
+       <view class="collect">
+        <text>0</text>
+        <text>收藏的商品</text>
+      </view>
+       <view class="collect">
+        <text>0</text>
+        <text>关注的商品</text>
+      </view>
+       <view class="collect">
+        <text>0</text>
+        <text>我的足迹</text>
+      </view>
+    </view>
+    <view class="order">
+         <view class="title">我的订单</view>
+      <view class="collects">
+          <view class="collect">
+            <text class="iconfont icon-daifukuan"></text>
+            <text>待付款</text>
+          </view>
+          <view class="collect">
+            <text class="iconfont icon-daishouhuo"></text>
+            <text>待收货</text>
+          </view>
+          <view class="collect">
+            <text class="iconfont icon-tuikuan"></text>
+            <text>退款/退货</text>
+          </view>
+          <view class="collect">
+            <text class="iconfont icon-dingdan"></text>
+            <text>全部订单</text>
+          </view>
+      </view>
+    </view>
+    <view class="about site">
+      <text>收货地址管理</text>
+      <text class="iconfont icon-jiantouyou"></text>
+    </view>
+     <view class="about">
+      <text>联系客服</text>
+      <text class="phone">400-618-4000</text>
+    </view>
+     <view class="about">
+      <text>意见反馈</text>
+      <text class="iconfont icon-jiantouyou"></text>
+    </view>
+     <view class="about">
+      <text>关于我们</text>
+      <text class="iconfont icon-eye"></text>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Me extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的'
+  }
+
+  data = {}
+
+  components = {}
+
+  methods = {}
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {}
+
+  onShow() {}
+}
+</script>
+
+<style lang='less'>
+// 顶部部分
+.top {
+  background-color: #ff2d4a;
+  height: 426rpx;
+  overflow: hidden;
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 130rpx;
+    position: relative;
+    image {
+      width: 135rpx;
+      height: 135rpx;
+      border: 5rpx solid #fff;
+      border-radius: 50%;
+      box-sizing: border-box;
+      display: block;
+    }
+    text {
+      display: block;
+      color: white;
+      margin-top: 20rpx;
+    }
+    .iconfont {
+      position: absolute;
+    }
+    .icon-xiaoxi {
+      left: 200rpx;
+      top: 30rpx;
+    }
+    .icon-shezhi {
+      right: 200rpx;
+      top: 30rpx;
+    }
+  }
+}
+// 下面部分
+.bottom {
+  background-color: #f4f4f4;
+  padding: 0 16rpx;
+  .collects {
+    height: 120rpx;
+    background-color: #fff;
+    display: flex;
+    transform: translateY(-25rpx);
+    .collect {
+      flex: 1;
+      font-size: 28rpx;
+      text-align: center;
+      margin-top: 25rpx;
+      text {
+        display: block;
+      }
+    }
+  }
+  .order {
+    .title {
+      height: 88rpx;
+      font-size: 34rpx;
+      background-color: #fff;
+      line-height: 88rpx;
+      border-bottom: 1px solid #eee;
+      padding-left: 20rpx;
+    }
+    .collects{
+      height: 166rpx;
+      margin-top: 28rpx;
+        .collect{
+          .iconfont{
+              font-size: 50rpx;
+              color: #eb4450;
+          }
+          
+        }
+    }
+  }
+  .about{
+    height: 86rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20rpx;
+    border-bottom: 1px solid #ccc;
+    text{
+        font-size: 30rpx;
+    }
+    .iconfont{
+      color: #ccc;
+    }
+    .phone{
+      color: #ccc;
+    }
+  }
+  .site{
+    border: none;
+    margin-bottom: 20rpx;
+  }
+}
+</style>

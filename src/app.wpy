@@ -1,4 +1,5 @@
 <style lang="less">
+@import './pages/style/iconfont.wxss';
 </style>
 
 <script>
@@ -6,14 +7,41 @@ import wepy from 'wepy'
 
 export default class extends wepy.app {
   config = {
-    pages: [
-      'pages/index'
-    ],
+    pages: ['pages/index', 'pages/category', 'pages/cart', 'pages/me'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#ff2d4a',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'white'
+    },
+    tabBar: {
+      selectedColor:'#ff2d4a',
+      list: [
+        {
+          pagePath: 'pages/index',
+          text: '首页',
+          iconPath: 'pages/image/icon/icon_home@3x.png',
+          selectedIconPath: 'pages/image/icon/icon_home_active@3x.png'
+        },
+        {
+          pagePath: 'pages/category',
+          text: '分类',
+          iconPath: 'pages/image/icon/icon_category@3x.png',
+          selectedIconPath: 'pages/image/icon/icon_category_active@3x.png'
+        },
+        {
+          pagePath: 'pages/cart',
+          text: '购物车',
+          iconPath: 'pages/image/icon/icon_cart@3x.png',
+          selectedIconPath: 'pages/image/icon/icon_cart_active@3x.png'
+        },
+        {
+          pagePath: 'pages/me',
+          text: '我的',
+          iconPath: 'pages/image/icon/icon_me@3x.png',
+          selectedIconPath: 'pages/image/icon/icon_me_active@3x.png'
+        }
+      ]
     }
   }
 

@@ -1,32 +1,138 @@
 <!--  -->
 <template>
-  <view class='container'></view>
+  <searchBar></searchBar>
+  <view class="scroll-box">
+    <scroll-view class="left" scroll-y scroll-with-animation @scroll="">
+      <block wx:for="{{categoryList}}" >
+        <view @tap="select({{index}})" class="nav {{index==selectIndex?'active':''}}" data-id="{{item.cat_id}}">{{item.cat_name}}</view>
+      </block>
+    </scroll-view>
+    <scroll-view class="right" scroll-y scroll-with-animation @scroll="">
+         <block wx:for="{{categoryList[selectIndex].children}}">
+            <view class="title">/{{item.cat_name}}/</view>
+                <view class="childern-box">
+                  <block wx:for="{{item.children}}" wx:for-item="product">
+                    <navigator url="" open-type="navigate" hover-class="none">
+                    <image src="https://www.zhengzhicheng.cn/{{product.cat_icon}}"></image>
+                        <text>{{product.cat_name}}</text>
+                    </navigator>
+                  </block>
+                </view>
+         </block>
+    </scroll-view>
+  </view>
 </template>
 
 <script>
-  import wepy from 'wepy';
-  export default class Example extends wepy.page {
-    config = {
-      navigationBarTitleText: "",
-    };
-
-    data = {};
-
-    components = {};
-
-    methods = {};
-
-    events = {};
-
-    watch = {};
-
-    computed = {};
-
-    onLoad() { };
-
-    onShow() { };
+import wepy from 'wepy'
+import searchBar from '../components/searchBar'
+var method = require('../utils/method.js')
+export default class Category extends wepy.page {
+  config = {
+    navigationBarTitleText: '分类'
   }
+
+  data = {
+    categoryList: '',
+    selectIndex: 0
+  }
+  components = {
+    searchBar: searchBar
+  }
+
+  methods = {
+    select(index) {
+      this.selectIndex = index
+    }
+  }
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {
+    //左侧导航
+    method.request({
+      url: 'api/public/v1/categories',
+      success: backData => {
+        //console.log(backData)
+        this.categoryList = backData.data.message
+        this.$apply()
+      }
+    })
+  }
+
+  onShow() {}
+}
 </script>
 
 <style lang='less'>
+page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .scroll-box {
+    flex: 1;
+    display: flex;
+    scroll-view {
+      height: 100%;
+      &.left {
+        width: 200rpx;
+        background-color: #f4f4f4;
+        .nav {
+          height: 100rpx;
+          text-align: center;
+          line-height: 100rpx;
+          border-bottom: 1px solid #eee;
+          &.active {
+            color: #ff4b63;
+            position: relative;
+            background-color: #fff;
+            font-weight: 700;
+            &::before {
+              content: '';
+              position: absolute;
+              top: 20rpx;
+              left: 0;
+              height: 60rpx;
+              width: 10rpx;
+              background-color: #ff4b63;
+            }
+          }
+        }
+      }
+      &.right {
+        flex: 1;
+        padding: 10rpx;
+        .title {
+          text-align: center;
+          font-size: 24rpx;
+          padding: 15rpx 0;
+        }
+        .childern-box {
+          display: flex;
+          flex-wrap: wrap;
+          navigator {
+            width: 33.33333%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10rpx 0;
+            image {
+              width: 100rpx;
+              height: 80rpx;
+              
+            }
+          }
+          text {
+            font-size:22rpx;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

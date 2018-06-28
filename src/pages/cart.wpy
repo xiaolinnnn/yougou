@@ -1,11 +1,11 @@
 <!--  -->
 <template>
-  <view class='container'></view>
+  <view class='container'>购物车</view>
 </template>
 
 <script>
   import wepy from 'wepy';
-  export default class Example extends wepy.page {
+  export default class cart extends wepy.page {
     config = {
       navigationBarTitleText: "",
     };
