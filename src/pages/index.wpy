@@ -1,6 +1,4 @@
 <style lang="less">
-// 搜索栏
-
 // 轮播图
 swiper {
   height: 340rpx;
@@ -179,7 +177,7 @@ export default class Index extends wepy.page {
     method.request({
       url: 'api/public/v1/home/floordata',
       success: backData => {
-        console.log(backData)
+        //console.log(backData)
         this.floorData = backData.data.message
         this.$apply()
       }

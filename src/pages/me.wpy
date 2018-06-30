@@ -3,9 +3,10 @@
   <view class="top">
     <view class="user-info">
         <text class="iconfont icon-xiaoxi"></text>
-        <image src="./image/icon/icon.png"></image>
+        <button class="login" open-type="getUserInfo" bindgetuserinfo="doLogin">获取信息</button>
+        <image @tap="login" src="{{userInfo?userInfo.avatarUrl:'./image/icon/icon.png'}}"></image>
         <text class="iconfont icon-shezhi"></text>
-        <text>轻松登录/注册</text>
+        <text>{{userInfo?userInfo.nickName:"轻松登录/注册"}}</text>
     </view>
   </view>
   <view class="bottom">
@@ -29,7 +30,7 @@
     </view>
     <view class="order">
          <view class="title">我的订单</view>
-      <view class="collects">
+      <view class="collects" @tap="toOrder">
           <view class="collect">
             <text class="iconfont icon-daifukuan"></text>
             <text>待付款</text>
@@ -48,7 +49,7 @@
           </view>
       </view>
     </view>
-    <view class="about site">
+    <view @tap="addRess" class="about site">
       <text>收货地址管理</text>
       <text class="iconfont icon-jiantouyou"></text>
     </view>
@@ -74,11 +75,42 @@ export default class Me extends wepy.page {
     navigationBarTitleText: '我的'
   }
 
-  data = {}
+  data = {
+    userInfo: undefined
+  }
 
   components = {}
 
-  methods = {}
+  methods = {
+    login() {
+      wx.getUserInfo({
+        withCredentials: 'false',
+        lang: 'zh_CN',
+        success: res => {
+          //console.log(res)
+          this.userInfo = res.userInfo
+          this.$apply()
+        }
+      })
+    },
+    doLogin(event) {
+      //console.log(event)
+      this.userInfo = event.detail.userInfo
+      this.$apply()
+    },
+    addRess() {
+      wx.chooseAddress({
+        success: res => {
+          console.log(res)
+        }
+      })
+    },
+    toOrder() {
+      wx.navigateTo({
+        url: '/pages/order'
+      })
+    }
+  }
 
   events = {}
 
@@ -86,7 +118,17 @@ export default class Me extends wepy.page {
 
   computed = {}
 
-  onLoad() {}
+  onLoad() {
+    wx.getUserInfo({
+      withCredentials: 'false',
+      lang: 'zh_CN',
+      success: res => {
+        //console.log(res)
+        this.userInfo = res.userInfo
+        this.$apply()
+      }
+    })
+  }
 
   onShow() {}
 }
@@ -128,6 +170,15 @@ export default class Me extends wepy.page {
       right: 200rpx;
       top: 30rpx;
     }
+    .login {
+      width: 135rpx;
+      height: 135rpx;
+      position: absolute;
+      top: 0;
+      left: 310rpx;
+      border-radius: 50%;
+      opacity: 0;
+    }
   }
 }
 // 下面部分
@@ -158,19 +209,18 @@ export default class Me extends wepy.page {
       border-bottom: 1px solid #eee;
       padding-left: 20rpx;
     }
-    .collects{
+    .collects {
       height: 166rpx;
       margin-top: 28rpx;
-        .collect{
-          .iconfont{
-              font-size: 50rpx;
-              color: #eb4450;
-          }
-          
+      .collect {
+        .iconfont {
+          font-size: 50rpx;
+          color: #eb4450;
         }
+      }
     }
   }
-  .about{
+  .about {
     height: 86rpx;
     background-color: #fff;
     display: flex;
@@ -178,17 +228,17 @@ export default class Me extends wepy.page {
     justify-content: space-between;
     padding: 0 20rpx;
     border-bottom: 1px solid #ccc;
-    text{
-        font-size: 30rpx;
+    text {
+      font-size: 30rpx;
     }
-    .iconfont{
+    .iconfont {
       color: #ccc;
     }
-    .phone{
+    .phone {
       color: #ccc;
     }
   }
-  .site{
+  .site {
     border: none;
     margin-bottom: 20rpx;
   }

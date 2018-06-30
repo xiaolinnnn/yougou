@@ -7,7 +7,7 @@
   import wepy from 'wepy';
   export default class cart extends wepy.page {
     config = {
-      navigationBarTitleText: "",
+      navigationBarTitleText: "购物车",
     };
 
     data = {};
@@ -29,4 +29,5 @@
 </script>
 
 <style lang='less'>
+
 </style>

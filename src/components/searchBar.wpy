@@ -3,20 +3,27 @@
  <view class="searth-bar">
    <icon type="search" size="16">
    </icon>
-   <input value="" type="text" placeholder="搜索"/>
+   <input @tap="toSearch" value="" type="text" placeholder="搜索"/>
  </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-export default class Example extends wepy.component {
+export default class searchBar extends wepy.component {
   props = {}
 
   data = {}
 
   components = {}
 
-  methods = {}
+  methods = {
+    toSearch() {
+      console.log('去搜索页面')
+      wx.navigateTo({
+        url: '/pages/search'
+      })
+    }
+  }
 
   events = {}
 

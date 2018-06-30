@@ -15,6 +15,7 @@ var method = {
       url: `${baseURL}${opt.url}`||'',
       method: opt.method||'get',
       success:opt.success||((backData)=>{console.log(backData);}),
+      data:opt.data||{},
       fail: opt.fail||(()=>{})
     })
   }

@@ -23,6 +23,7 @@
   </view>
 </template>
 
+
 <script>
 import wepy from 'wepy'
 import searchBar from '../components/searchBar'
@@ -37,7 +38,7 @@ export default class Category extends wepy.page {
     selectIndex: 0
   }
   components = {
-    searchBar: searchBar
+    searchBar
   }
 
   methods = {
@@ -67,6 +68,8 @@ export default class Category extends wepy.page {
   onShow() {}
 }
 </script>
+  
+
 
 <style lang='less'>
 page {
@@ -124,11 +127,10 @@ page {
             image {
               width: 100rpx;
               height: 80rpx;
-              
             }
           }
           text {
-            font-size:22rpx;
+            font-size: 22rpx;
           }
         }
       }

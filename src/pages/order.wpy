@@ -1,0 +1,82 @@
+<!--  -->
+<template>
+    <view class="top">
+        <view class="nav-bar">
+            <view @tap="selectItem({{0}})" class="item {{selectIndex==0?'active':''}}">全部</view>
+            <view @tap="selectItem({{1}})" class="item {{selectIndex==1?'active':''}}">待付款</view>
+            <view @tap="selectItem({{2}})" class="item {{selectIndex==2?'active':''}}">已付款</view>
+            <view @tap="selectItem({{3}})" class="item {{selectIndex==3?'active':''}}">退款/退货</view>
+        </view>
+        <view class="content-box">
+            <view class="content" hidden="{{selectIndex!=0}}">1</view>
+            <view class="content" hidden="{{selectIndex!=1}}">2</view>
+            <view class="content" hidden="{{selectIndex!=2}}">3</view>
+            <view class="content" hidden="{{selectIndex!=3}}">4</view>
+        </view>
+    </view>
+    <view class="bottom"></view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Order extends wepy.page {
+  config = {
+    navigationBarTitleText: '订单'
+  }
+
+  data = {
+    selectIndex: 0
+  }
+
+  components = {}
+
+  methods = {
+    selectItem(index) {
+      //console.log(index);
+      this.selectIndex = index
+    }
+  }
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {}
+
+  onShow() {}
+}
+</script>
+
+<style lang='less'>
+page {
+  background-color: #f4f4f4;
+  .top {
+    .nav-bar {
+      height: 100rpx;
+      display: flex;
+      background-color: #fff;
+      .item {
+        flex: 1;
+        font-size: 32rpx;
+        text-align: center;
+        line-height: 100rpx;
+        &.active {
+          color: #eb4450;
+          position: relative;
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background-color: #eb4450;
+            height: 12rpx;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
