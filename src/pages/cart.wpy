@@ -219,7 +219,7 @@ export default class cart extends wepy.page {
       let promise = this.$invoke('toast', 'show', {
         title: '谢谢支持',
         img:'./image/icon/Snipaste_2018-07-03_20-32-22.png',
-         duration: 10000
+        duration: 10000
       })
 
       promise.then(d => {
