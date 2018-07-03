@@ -18,7 +18,7 @@ export default class searchBar extends wepy.component {
 
   methods = {
     toSearch() {
-      console.log('去搜索页面')
+      //console.log('去搜索页面')
       wx.navigateTo({
         url: '/pages/search'
       })

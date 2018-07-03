@@ -1,6 +1,6 @@
 
 // 抽取 基地址
-var baseURL = 'https://www.zhengzhicheng.cn/';
+var baseURL = 'https://127.0.0.1/';
 // 写封装的东西
 var method = {
   /*

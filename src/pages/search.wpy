@@ -24,7 +24,7 @@
     </view>
     <view class="goods">
        <block wx:for="{{goodList}}" wx:key="">
-        <view class="product">
+        <view @tap="toDetail({{item.goods_id}})" class="product">
              <view class="left">
                 <image src="{{item.goods_small_logo}}"></image>
             </view>
@@ -57,7 +57,9 @@ export default class Search extends wepy.page {
     //选中的索引值
     selectIndex: 0,
     // 保存获取的数据
-    goodList: '',
+    goodList: [],
+    //保存多一个初始的数据
+    goodDefaultList: [],
     //价格排序,true升序,false降序
     priceSort: true
   }
@@ -109,6 +111,8 @@ export default class Search extends wepy.page {
           this.hiddenList = false
           //绑定数据
           this.goodList = res.data.message.goods
+          //在绑定一个初始数据
+          this.goodDefaultList = res.data.message.goods.slice(0)
           //脏数据
           this.$apply()
           //隐藏loading动画
@@ -128,16 +132,17 @@ export default class Search extends wepy.page {
       this.inputValue = res
       this.hiddenSearch = false
     },
-    //切换高亮
+    //排序
     selectOption(index) {
       this.selectIndex = index
       //根据索引判断点击的选项
       switch (index) {
         case 0:
-          console.log('默认值')
+          //console.log('默认值')
+          this.goodList = this.goodDefaultList.slice(0)
           break
         case 1:
-          console.log('销量排序')
+          //console.log('销量排序')
           this.goodList.sort((a, b) => {
             //console.log(a);
             //console.log(b);
@@ -145,7 +150,7 @@ export default class Search extends wepy.page {
           })
           break
         case 2:
-          console.log('价钱排序')
+          //console.log('价钱排序')
           this.priceSort = !this.priceSort
           this.goodList.sort((a, b) => {
             if (this.priceSort) {
@@ -156,6 +161,13 @@ export default class Search extends wepy.page {
           })
           break
       }
+    },
+    //去商品详情
+    toDetail(goods_id) {
+      // console.log(goods_id)
+      wx.navigateTo({
+        url: `/pages/detail?goods_id=${goods_id}`
+      })
     }
   }
   events = {}

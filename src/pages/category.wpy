@@ -54,7 +54,7 @@ export default class Category extends wepy.page {
   computed = {}
 
   onLoad() {
-    //左侧导航
+    //分类页面数据
     method.request({
       url: 'api/public/v1/categories',
       success: backData => {

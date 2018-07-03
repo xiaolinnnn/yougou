@@ -82,17 +82,6 @@ export default class Me extends wepy.page {
   components = {}
 
   methods = {
-    login() {
-      wx.getUserInfo({
-        withCredentials: 'false',
-        lang: 'zh_CN',
-        success: res => {
-          //console.log(res)
-          this.userInfo = res.userInfo
-          this.$apply()
-        }
-      })
-    },
     doLogin(event) {
       //console.log(event)
       this.userInfo = event.detail.userInfo
