@@ -3,7 +3,7 @@
   <view class="top">
     <view class="user-info">
         <text class="iconfont icon-xiaoxi"></text>
-        <button class="login" open-type="getUserInfo" bindgetuserinfo="doLogin">获取信息</button>
+        <button class="login" open-type="getUserInfo" @tap="doLogin">获取信息</button>
         <image @tap="login" src="{{userInfo?userInfo.avatarUrl:'./image/icon/icon.png'}}"></image>
         <text class="iconfont icon-shezhi"></text>
         <text>{{userInfo?userInfo.nickName:"轻松登录/注册"}}</text>
@@ -70,6 +70,7 @@
 
 <script>
 import wepy from 'wepy'
+var method = require('../utils/method.js')
 export default class Me extends wepy.page {
   config = {
     navigationBarTitleText: '我的'
@@ -84,8 +85,45 @@ export default class Me extends wepy.page {
   methods = {
     doLogin(event) {
       //console.log(event)
-      this.userInfo = event.detail.userInfo
-      this.$apply()
+      // this.userInfo = event.detail.userInfo
+      // this.$apply()
+      //获取code
+      wx.login({
+        success: loginRes => {
+          console.log(loginRes)
+          // 使用wx.getUserInfo获取用户的更为详细的信息
+          wx.getUserInfo({
+            withCredentials: 'false',
+            lang: 'zh_CN',
+            success: userRes => {
+              console.log(userRes)
+              this.userInfo = userRes.userInfo;
+              this.$apply()
+              // 用户信息保存到 data中
+              // 把这些数据 发送给自己的服务器去验证
+              method.request({
+                url: 'api/public/v1/users/wxlogin',
+                method: 'post',
+                data: {
+                  code:loginRes.code,
+                  encryptedData: userRes.encryptedData,
+                  iv: userRes.iv,
+                  rawData: userRes.rawData,
+                  signature: userRes.signature
+                },
+                success: res => {
+                  console.log(res)
+                  wx.setStorage({
+                    key: 'token',
+                    data: res.data.message.token
+                  });
+                }
+              })
+              
+            }
+          })
+        }
+      })
     },
     addRess() {
       wx.chooseAddress({
@@ -108,15 +146,15 @@ export default class Me extends wepy.page {
   computed = {}
 
   onLoad() {
-    wx.getUserInfo({
-      withCredentials: 'false',
-      lang: 'zh_CN',
-      success: res => {
-        //console.log(res)
-        this.userInfo = res.userInfo
-        this.$apply()
-      }
-    })
+    // wx.getUserInfo({
+    //   withCredentials: 'false',
+    //   lang: 'zh_CN',
+    //   success: res => {
+    //     //console.log(res)
+    //     this.userInfo = res.userInfo
+    //     this.$apply()
+    //   }
+    // })
   }
 
   onShow() {}

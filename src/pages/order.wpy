@@ -19,13 +19,16 @@
 
 <script>
 import wepy from 'wepy'
+var method = require('../utils/method.js')
 export default class Order extends wepy.page {
   config = {
     navigationBarTitleText: '订单'
   }
 
   data = {
-    selectIndex: 0
+    selectIndex: 0,
+    // 订单数据
+    orderList: []
   }
 
   components = {}
@@ -43,7 +46,20 @@ export default class Order extends wepy.page {
 
   computed = {}
 
-  onLoad() {}
+  onLoad() {
+    var token = wx.getStorageSync('token')
+    method.request({
+      url: 'api/public/v1/my/orders/all?type=2',
+      header: {
+        Authorization: token
+      },
+      success: res => {
+        console.log(res)
+        this.orderList = res.data.message
+        this.$apply()
+      }
+    })
+  }
 
   onShow() {}
 }
@@ -62,7 +78,7 @@ page {
         font-size: 32rpx;
         text-align: center;
         line-height: 100rpx;
-        transition: all .5s;
+        transition: all 0.5s;
         &.active {
           color: #eb4450;
           position: relative;
