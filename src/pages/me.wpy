@@ -90,13 +90,13 @@ export default class Me extends wepy.page {
       //获取code
       wx.login({
         success: loginRes => {
-          console.log(loginRes)
+          //console.log(loginRes)
           // 使用wx.getUserInfo获取用户的更为详细的信息
           wx.getUserInfo({
             withCredentials: 'false',
             lang: 'zh_CN',
             success: userRes => {
-              console.log(userRes)
+              //console.log(userRes)
               this.userInfo = userRes.userInfo;
               this.$apply()
               // 用户信息保存到 data中

@@ -1,0 +1,67 @@
+<!--  -->
+<template>
+    <view class="nav-bar">
+        <block wx:for="{{tabList}}" wx:key="">
+            <view @tap="selectItem({{index}})" class="item {{selectIndex==index?'active':''}}">{{item}}</view>
+        </block>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class Example extends wepy.component {
+        props = {
+            tabList: {
+                type: Array,
+                default: []
+            },
+            selectIndex: {
+                type: Number,
+                default: 0,
+                twoWay: true
+            }
+        }
+        data = {}
+        components = {}
+        methods = {
+            selectItem(index) {
+                //console.log(index);
+                this.selectIndex = index
+            }
+        }
+        events = {}
+        watch = {}
+        computed = {}
+        onLoad() {}
+        onShow() {}
+    }
+</script>
+
+<style lang='less'>
+    .nav-bar {
+        height: 100rpx;
+        display: flex;
+        background-color: #fff;
+        .item {
+            flex: 1;
+            font-size: 32rpx;
+            text-align: center;
+            line-height: 100rpx;
+            transition: all 0.5s;
+            &.active {
+                color: #eb4450;
+                position: relative;
+                box-shadow: inset 0 -10rpx 0 #eb4450; 
+                // &::after {
+                //   content: '';
+                //   position: absolute;
+                //   left: 0;
+                //   bottom: 0;
+                //   background-color: #eb4450;
+                //   height: 12rpx;
+                //   width: 100%;
+                // }
+            }
+        }
+    }
+</style>

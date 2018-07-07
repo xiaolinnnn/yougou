@@ -76,8 +76,8 @@ export default class cart extends wepy.page {
     cart: undefined,
     // 详细信息
     cartDetails: [],
-    //数量
-    isCheckedAll: false,
+    //是否勾选了全选
+    isCheckedAll: true,
     //总金额
     totalPrice: 0
   }
@@ -133,8 +133,6 @@ export default class cart extends wepy.page {
               }
               // 检查脏数据
               this.$apply()
-            } else {
-              // 没想清楚
             }
           }
         })
@@ -157,6 +155,9 @@ export default class cart extends wepy.page {
         if (ele.isChecked == false) {
           // 有没有选中的 取消全选的勾选
           this.isCheckedAll = false
+          return
+        } else {
+          this.isCheckedAll = true
           return
         }
       })
@@ -218,12 +219,12 @@ export default class cart extends wepy.page {
       //弹出自己的二维码
       let promise = this.$invoke('toast', 'show', {
         title: '谢谢支持',
-        img:'./image/icon/Snipaste_2018-07-03_20-32-22.png',
+        img: './image/icon/Snipaste_2018-07-03_20-32-22.png',
         duration: 10000
       })
 
       promise.then(d => {
-       // console.log('toast done')
+        // console.log('toast done')
       })
       //判断是否保存了token
       wx.getStorage({
@@ -309,6 +310,7 @@ export default class cart extends wepy.page {
       // 找个数
       this.cartDetails.forEach(ele => {
         // 如果为true ++
+        //console.log(ele);
         if (ele.isChecked == true) {
           num++
         }
@@ -317,7 +319,9 @@ export default class cart extends wepy.page {
       return num
     }
   }
-  onLoad() {}
+  onLoad() {
+
+  }
   onShow() {
     //获取购物的信息
     wx.getStorage({
@@ -343,6 +347,10 @@ export default class cart extends wepy.page {
             goods_ids: goods_ids
           },
           success: res => {
+            // 每一个中增加一个是否选中的状态
+            for (var i = 0; i < res.data.message.length; i++) {
+              res.data.message[i].isChecked = true
+            }
             //console.log(res)
             this.cartDetails = res.data.message
             this.$apply()

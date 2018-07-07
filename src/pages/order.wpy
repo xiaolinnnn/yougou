@@ -1,12 +1,8 @@
 <!--  -->
 <template>
     <view class="top">
-        <view class="nav-bar">
-            <view @tap="selectItem({{0}})" class="item {{selectIndex==0?'active':''}}">全部</view>
-            <view @tap="selectItem({{1}})" class="item {{selectIndex==1?'active':''}}">待付款</view>
-            <view @tap="selectItem({{2}})" class="item {{selectIndex==2?'active':''}}">已付款</view>
-            <view @tap="selectItem({{3}})" class="item {{selectIndex==3?'active':''}}">退款/退货</view>
-        </view>
+      <tabBars :tabList.sync="tabList" :selectIndex="selectIndex"></tabBars>
+       
         <view class="content-box">
             <view class="content" hidden="{{selectIndex!=0}}">1</view>
             <view class="content" hidden="{{selectIndex!=1}}">2</view>
@@ -19,6 +15,7 @@
 
 <script>
 import wepy from 'wepy'
+import tabBars from '../components/tabBars'
 var method = require('../utils/method.js')
 export default class Order extends wepy.page {
   config = {
@@ -28,16 +25,16 @@ export default class Order extends wepy.page {
   data = {
     selectIndex: 0,
     // 订单数据
-    orderList: []
+    orderList: [],
+    tabList:['全部','未付款','已付款','退款']
   }
 
-  components = {}
+  components = {
+    tabBars:tabBars
+  }
 
   methods = {
-    selectItem(index) {
-      //console.log(index);
-      this.selectIndex = index
-    }
+    
   }
 
   events = {}
@@ -69,32 +66,7 @@ export default class Order extends wepy.page {
 page {
   background-color: #f4f4f4;
   .top {
-    .nav-bar {
-      height: 100rpx;
-      display: flex;
-      background-color: #fff;
-      .item {
-        flex: 1;
-        font-size: 32rpx;
-        text-align: center;
-        line-height: 100rpx;
-        transition: all 0.5s;
-        &.active {
-          color: #eb4450;
-          position: relative;
-          box-shadow: inset 0 -10rpx 0 #eb4450;
-          // &::after {
-          //   content: '';
-          //   position: absolute;
-          //   left: 0;
-          //   bottom: 0;
-          //   background-color: #eb4450;
-          //   height: 12rpx;
-          //   width: 100%;
-          // }
-        }
-      }
-    }
+   
   }
 }
 </style>
